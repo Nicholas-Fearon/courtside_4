@@ -26,15 +26,17 @@ export default async function TeamsPage() {
       <h1>NBA Teams</h1>
       <ul>
         {teams.map((team) => (
+           team.nbaFranchise && team.name !== "Home Team Stephen A" &&
           <li key={team.id}>
             <Image
             src={team.logo}
-            width={200}
-            height={200}
-            alt="NBA Team Logo"
+            width={50}
+            height={50}
+            alt={`${team.name} Logo`}
             />
             {team.name}</li>
         ))}
+    
       </ul>
     </div>
   );
