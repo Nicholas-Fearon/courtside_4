@@ -1,5 +1,6 @@
 // app/teams/page.js
 import Image from "next/image";
+import Link from "next/link";
 export default async function TeamsPage() {
   const url = "https://api-nba-v1.p.rapidapi.com/teams";
   const options = {
@@ -15,8 +16,9 @@ export default async function TeamsPage() {
   try {
     const response = await fetch(url, options);
     const data = await response.json();
-    console.log(data)
+    console.log(data);
     teams = data.response; // Array of teams
+    console.log("Log of teams:", teams)
   } catch (error) {
     console.error("Failed to fetch teams:", error);
   }
@@ -25,18 +27,25 @@ export default async function TeamsPage() {
     <div>
       <h1>NBA Teams</h1>
       <ul>
-        {teams.map((team) => (
-           team.nbaFranchise && team.name !== "Home Team Stephen A" &&
-          <li key={team.id}>
-            <Image
-            src={team.logo}
-            width={50}
-            height={50}
-            alt={`${team.name} Logo`}
-            />
-            {team.name}</li>
-        ))}
-    
+        {teams.map(
+            
+          (team) =>
+            team.nbaFranchise &&
+            team.name !== "Home Team Stephen A" && (
+              <li key={team.id}>
+                <Link href={`/teams/${team.id}`}>
+                  
+                  <Image
+                    src={team.logo}
+                    width={50}
+                    height={50}
+                    alt={`${team.name} Logo`}
+                  />
+                </Link>
+                {team.name}
+              </li>
+            )
+        )}
       </ul>
     </div>
   );
